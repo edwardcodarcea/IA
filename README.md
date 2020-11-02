@@ -46,3 +46,18 @@ scenariu se va intampla in cazul unei functionari a aspiratorului.
 #### Plan
 La final se creeaza un *plan* de actiune, un fel de algoritm care descrie
 deciziile aspiratorului in functie de mediu (curatenia celulelor).
+
+
+### Laborator 3 - PCSP
+Se implementeaza un algoritm generic de rezolvare a unei probleme de satisfacere
+a constrangerilor care admite un numar dat de abateri de la constrangerile date.
+Algoritmul folosit este un *BKT* clasic care nu mai viziteaza nodurile de pe o
+ramura atunci cand numarul de abateri de la constragneri de pe aceasta depaseste
+numarul minim global gasit pana in acel moment, deoarece ce pe acea ramura nu
+mai se poate gasi o asignare de variabile cu un cost mai mic decat minimul
+curent.
+
+
+### Laborator 4 - MCTS
+Se implementeaza algoritmul *Monte Carlo Tree Search* pe un joc de
+[connect 4](https://en.wikipedia.org/wiki/Connect_Four)
