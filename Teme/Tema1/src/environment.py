@@ -1,4 +1,5 @@
 from os.path import expanduser
+from math import inf
 
 
 class Environment:
@@ -10,12 +11,20 @@ class Environment:
 		self.graph = {}
 		self.nodes = {}
 		self.obsts = set()
+		self.min_cost = inf
+		self.__max_x = -inf
+		self.__max_y = -inf
 
 	def add_node(self, id, pos_x, pos_y, obst=False):
 		if pos_x == self.__start_x and pos_y == self.__start_y:
 			self.start = id
 		if pos_x == self.__target_x and pos_y == self.__target_y:
 			self.target = id
+
+		if self.__max_x < pos_x:
+			self.__max_x = pos_x
+		if self.__max_y < pos_y:
+			self.__max_y = pos_y
 
 		if obst:
 			self.obsts.add((pos_x, pos_y))
@@ -25,6 +34,9 @@ class Environment:
 	def add_edge(self, id1, id2, cost):
 		if id1 not in self.nodes or id2 not in self.nodes:
 			return
+
+		if cost < self.min_cost:
+			self.min_cost = cost
 
 		if id1 in self.graph:
 			self.graph[id1].append((id2, cost))
@@ -37,10 +49,7 @@ class Environment:
 			self.graph[id2] = [(id1, cost)]
 
 	def get_size(self):
-		return (
-			max(c for c, _ in self.nodes.values()),
-			max(r for r, _ in self.nodes.values())
-		)
+		return (self.__max_x, self.__max_y)
 
 
 def init_env(input_file):

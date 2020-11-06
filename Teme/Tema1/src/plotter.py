@@ -22,15 +22,18 @@ def _plot_path(axis, map_size, env, path):
 	for r in range(map_size[0]):
 		for c in range(map_size[1]):
 			if (c, r) in visited:
-				cost_map[c][r] = 20
+				cost_map[c][r] = 40
 
-	cost_map[env.nodes[env.target][0]][env.nodes[env.target][1]] = 30
+	cost_map[env.nodes[env.target][0]][env.nodes[env.target][1]] = 60
+	cost_map[env.nodes[env.start][0]][env.nodes[env.start][1]] = 30
 
 	axis.set_title("Calea agentului pana la tinta")
 	axis.imshow(cost_map, cmap="gist_heat", interpolation="nearest")
 
 
-def display_results(alg, input_file, env, path, costs, time, memory):
+def display_results(alg, input_file, env, path, costs, time, memory,
+	heur_name=None
+):
 	print(f"Path nodes:\n{path}")
 	print(f"Path positions:\n{_get_real_path(path, env)}")
 
@@ -40,7 +43,11 @@ def display_results(alg, input_file, env, path, costs, time, memory):
 
 	map_size = env.get_size()
 	fig, axes = plt.subplots(1, 2)
-	fig.suptitle(f"Costs and path to target for {alg} on file {input_file}")
+	if heur_name:
+		fig.suptitle(f"Costs and best path for {alg} with heuristic "
+			f"'{heur_name}' on file {input_file}")
+	else:
+		fig.suptitle(f"Costs and best path for {alg} on file {input_file}")
 
 	_plot_costs(axes[0], map_size, env, costs)
 	_plot_path(axes[1], map_size, env, path)

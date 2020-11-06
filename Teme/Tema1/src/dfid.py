@@ -1,10 +1,8 @@
 from math import inf
 from sys import argv
-from time import process_time
-import tracemalloc
 
-from environment import get_next_states, init_env
-from plotter import display_results
+from environment import get_next_states
+from task_runner import run
 
 
 def dfid_traversal(crt_node, env, visited, crt_cost, limit):
@@ -55,26 +53,7 @@ def main():
 		print(f"Usage: python3 {argv[0]} <input_file>")
 		exit(1)
 
-	env = init_env(argv[1])
-
-	# Algoritmul e rulat de 2 ori, deoarece hookurile facute de `tracemalloc`
-	# incetinesc algoritmul, ceea ce corupe masuratoarea de timp
-	# De asemenea, e necesar ca rularea pentru masurarea memoriei sa se faca
-	# prima. In caz contrar, masuratorile vor arata valori mai mici, deoarece
-	# se va refolosi o parte din memoria alocata in cadrul primei rulari a
-	# algoritmului.
-	tracemalloc.start()
-	path, costs = dfid(env)
-	# Cantitatea maxima de memorie utilizata
-	memory = tracemalloc.get_traced_memory()[1]
-	tracemalloc.stop()
-
-	start_time = process_time()
-	dfid(env)
-	end_time = process_time()
-
-	display_results("DFID", argv[1], env, path, costs, end_time - start_time,
-		memory)
+	run(dfid, "DFID", argv[1])
 
 
 if __name__ == "__main__":

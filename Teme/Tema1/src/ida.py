@@ -1,14 +1,12 @@
 from math import inf
 from sys import argv
-from time import process_time
-import tracemalloc
 
-from environment import get_next_states, init_env
-from heuristics import euclid, manhattan
-from plotter import display_results
+from environment import get_next_states
+import heuristics as heur
+from task_runner import run
 
 
-def ida_traversal(crt_node, env, visited, crt_cost, limit, heur):
+def ida_traversal(crt_node, env, visited, crt_cost, limit, h):
 	global global_limit
 
 	if crt_node == env.target:
@@ -16,7 +14,7 @@ def ida_traversal(crt_node, env, visited, crt_cost, limit, heur):
 
 	for next_node, new_cost in get_next_states(env, crt_node):
 		real_next_cost = crt_cost + new_cost
-		pred_next_cost = real_next_cost + heur(env, next_node)
+		pred_next_cost = real_next_cost + h(env, next_node)
 
 		if next_node in visited and real_next_cost >= visited[next_node]:
 			continue
@@ -25,7 +23,7 @@ def ida_traversal(crt_node, env, visited, crt_cost, limit, heur):
 
 		if pred_next_cost <= limit:
 			next_path = ida_traversal(next_node, env, visited, real_next_cost,
-				limit, heur)
+				limit, h)
 
 			if next_path:
 				return [crt_node] + next_path
@@ -35,10 +33,10 @@ def ida_traversal(crt_node, env, visited, crt_cost, limit, heur):
 	return []
 
 
-def ida(env, heur):
+def ida(env, h):
 	global global_limit
 
-	global_limit = heur(env, env.start)
+	global_limit = h(env, env.start)
 	best_path = []
 	visited = {}
 
@@ -47,36 +45,27 @@ def ida(env, heur):
 		global_limit = inf
 		visited = {env.start: 0}
 
-		best_path = ida_traversal(env.start, env, visited, 0, limit, heur)
+		best_path = ida_traversal(env.start, env, visited, 0, limit, h)
 
 	return best_path, visited
 
 
 def main():
-	if len(argv) != 2:
-		print(f"Usage: python3 {argv[0]} <input_file>")
+	if len(argv) != 3:
+		print(f"Usage: python3 {argv[0]} <input_file> <heuristic>")
 		exit(1)
 
-	env = init_env(argv[1])
+	heuristics = {
+		"euclid": heur.euclid,
+		"manhattan": heur.manhattan,
+		"manhattan_on_steroids": heur.manhattan_on_steroids
+	}
 
-	# Algoritmul e rulat de 2 ori, deoarece hookurile facute de `tracemalloc`
-	# incetinesc algoritmul, ceea ce corupe masuratoarea de timp
-	# De asemenea, e necesar ca rularea pentru masurarea memoriei sa se faca
-	# prima. In caz contrar, masuratorile vor arata valori mai mici, deoarece
-	# se va refolosi o parte din memoria alocata in cadrul primei rulari a
-	# algoritmului.
-	tracemalloc.start()
-	path, costs = ida(env, euclid)
-	# Cantitatea maxima de memorie utilizata
-	memory = tracemalloc.get_traced_memory()[1]
-	tracemalloc.stop()
+	if argv[2] not in heuristics:
+		print(f"The available heuristics are: {heuristics.keys()}")
+		exit(2)
 
-	start_time = process_time()
-	ida(env, euclid)
-	end_time = process_time()
-
-	display_results("IDA*", argv[1], env, path, costs, end_time - start_time,
-		memory)
+	run(ida, "IDA*", argv[1], heuristics[argv[2]], argv[2])
 
 
 if __name__ == "__main__":
