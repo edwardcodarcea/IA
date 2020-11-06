@@ -1,10 +1,6 @@
 from os.path import expanduser
 
 
-NODE = 0
-COST = 1
-
-
 class Environment:
 	def __init__(self, start_x, start_y, target_x, target_y):
 		self.__start_x = start_x

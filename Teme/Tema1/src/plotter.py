@@ -30,7 +30,7 @@ def _plot_path(axis, map_size, env, path):
 	axis.imshow(cost_map, cmap="gist_heat", interpolation="nearest")
 
 
-def show_results(env, path, costs, time, memory):
+def display_results(alg, input_file, env, path, costs, time, memory):
 	print(f"Path nodes:\n{path}")
 	print(f"Path positions:\n{_get_real_path(path, env)}")
 
@@ -40,6 +40,7 @@ def show_results(env, path, costs, time, memory):
 
 	map_size = env.get_size()
 	fig, axes = plt.subplots(1, 2)
+	fig.suptitle(f"Costs and path to target for {alg} on file {input_file}")
 
 	_plot_costs(axes[0], map_size, env, costs)
 	_plot_path(axes[1], map_size, env, path)
