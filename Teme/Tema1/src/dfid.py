@@ -1,7 +1,7 @@
 from math import inf
 from sys import argv
 
-from environment import get_next_states
+import environment
 from task_runner import run
 
 
@@ -11,7 +11,7 @@ def dfid_traversal(crt_node, env, visited, crt_cost, limit):
 	if crt_node == env.target:
 		return [crt_node]
 
-	for next_node, new_cost in get_next_states(env, crt_node):
+	for next_node, new_cost in env.neighbours[crt_node]:
 		next_cost = crt_cost + new_cost
 
 		if next_node in visited and next_cost >= visited[next_node]:

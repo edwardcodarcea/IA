@@ -13,7 +13,7 @@ def _plot_costs(axis, map_size, env, costs):
 	for r in range(map_size[0]):
 		for c in range(map_size[1]):
 			if (c, r) in env.obsts:
-				cost_map[c][r] = -2
+				cost_map[c][r] = -20
 
 	axis.set_title("Costurile gasite de agent")
 	axis.imshow(cost_map, cmap="gist_heat", interpolation="nearest",
@@ -46,7 +46,7 @@ def display_results(alg, input_file, env, path, costs, time, memory,
 
 	print(f"Cost to target: {costs[env.target]}")
 	print(f"Running time: {time} seconds")
-	print(f"Used memory: {memory / 2**10} KB")
+	print(f"Used memory: {memory / 2**10}KB")
 
 	map_size = env.get_size()
 	fig, axes = plt.subplots(1, 2)

@@ -1,12 +1,12 @@
 from time import process_time
 import tracemalloc
 
-from environment import init_env
+from environment import Environment
 from plotter import display_results
 
 
 def run(alg, alg_name, input_file, heur=None, heur_name=None):
-	env = init_env(input_file)
+	env = Environment(input_file)
 
 	# Algoritmul e rulat de 2 ori, deoarece hookurile facute de `tracemalloc`
 	# incetinesc algoritmul, ceea ce corupe masuratoarea de timp

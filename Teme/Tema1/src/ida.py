@@ -1,7 +1,7 @@
 from math import inf
 from sys import argv
 
-from environment import get_next_states
+import environment
 import heuristics as heur
 from task_runner import run
 
@@ -12,7 +12,7 @@ def ida_traversal(crt_node, env, visited, crt_cost, limit, h):
 	if crt_node == env.target:
 		return [crt_node]
 
-	for next_node, new_cost in get_next_states(env, crt_node):
+	for next_node, new_cost in env.neighbours[crt_node]:
 		real_next_cost = crt_cost + new_cost
 		pred_next_cost = real_next_cost + h(env, next_node)
 
