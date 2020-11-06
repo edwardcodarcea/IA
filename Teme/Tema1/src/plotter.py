@@ -10,13 +10,19 @@ def _plot_costs(axis, map_size, env, costs):
 	cost_map = [[visited_costs.get((c, r), 0)
 		for r in range(map_size[0])] for c in range(map_size[1])]
 
+	for r in range(map_size[0]):
+		for c in range(map_size[1]):
+			if (c, r) in env.obsts:
+				cost_map[c][r] = -2
+
 	axis.set_title("Costurile gasite de agent")
-	axis.imshow(cost_map, cmap="gist_heat", interpolation="nearest")
+	axis.imshow(cost_map, cmap="gist_heat", interpolation="nearest",
+		origin="lower")
 
 
 def _plot_path(axis, map_size, env, path):
 	visited = set(env.nodes[node] for node in path)
-	cost_map = [[0 if (c, r) in env.obsts else 10 \
+	cost_map = [[0 if (c, r) in env.obsts else 20 \
 		for r in range(map_size[0])] for c in range(map_size[1])]
 
 	for r in range(map_size[0]):
@@ -28,7 +34,8 @@ def _plot_path(axis, map_size, env, path):
 	cost_map[env.nodes[env.start][0]][env.nodes[env.start][1]] = 30
 
 	axis.set_title("Calea agentului pana la tinta")
-	axis.imshow(cost_map, cmap="gist_heat", interpolation="nearest")
+	axis.imshow(cost_map, cmap="gist_heat", interpolation="nearest",
+		origin="lower")
 
 
 def display_results(alg, input_file, env, path, costs, time, memory,
