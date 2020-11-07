@@ -20,7 +20,7 @@ def _bnb_traversal(env, node, path, cost, h, visited):
 
 	for neigh, edge_cost in sorted(env.neighbours[node], key=lambda x: x[1]):
 		neigh_cost = cost + edge_cost
-		if (neigh in visited and visited[neigh] <=neigh_cost
+		if (neigh in visited and visited[neigh] <= neigh_cost
 			or neigh_cost + h(env, neigh) >= limit
 		):
 			continue
