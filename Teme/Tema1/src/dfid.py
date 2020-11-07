@@ -5,28 +5,28 @@ import environment
 from task_runner import run
 
 
-def dfid_traversal(crt_node, env, visited, crt_cost, limit):
+def _dfid_traversal(env, node, visited, crt_cost, limit):
 	global global_limit
 
-	if crt_node == env.target:
-		return [crt_node]
+	if node == env.target:
+		return [node]
 
-	for next_node, new_cost in env.neighbours[crt_node]:
-		next_cost = crt_cost + new_cost
+	for neigh, new_cost in env.neighbours[node]:
+		neigh_cost = crt_cost + new_cost
 
-		if next_node in visited and next_cost >= visited[next_node]:
+		if neigh in visited and neigh_cost >= visited[neigh]:
 			continue
 
-		visited[next_node] = next_cost
+		visited[neigh] = neigh_cost
 
-		if next_cost <= limit:
-			next_path = dfid_traversal(next_node, env, visited,
-				next_cost, limit)
+		if neigh_cost <= limit:
+			next_path = _dfid_traversal(env, neigh, visited,
+				neigh_cost, limit)
 
 			if next_path:
-				return [crt_node] + next_path
-		elif next_cost < global_limit:
-			global_limit = next_cost
+				return [node] + next_path
+		elif neigh_cost < global_limit:
+			global_limit = neigh_cost
 
 	return []
 
@@ -43,7 +43,7 @@ def dfid(env):
 		global_limit = inf
 		visited = {env.start: 0}
 
-		best_path = dfid_traversal(env.start, env, visited, 0, limit)
+		best_path = _dfid_traversal(env, env.start, visited, 0, limit)
 
 	return best_path, visited
 

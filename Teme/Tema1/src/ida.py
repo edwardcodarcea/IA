@@ -6,29 +6,29 @@ import heuristics as heur
 from task_runner import run
 
 
-def ida_traversal(crt_node, env, visited, crt_cost, limit, h):
+def _ida_traversal(env, node, visited, crt_cost, limit, h):
 	global global_limit
 
-	if crt_node == env.target:
-		return [crt_node]
+	if node == env.target:
+		return [node]
 
-	for next_node, new_cost in env.neighbours[crt_node]:
-		real_next_cost = crt_cost + new_cost
-		pred_next_cost = real_next_cost + h(env, next_node)
+	for neigh, neigh_cost in env.neighbours[node]:
+		real_neigh_cost = crt_cost + neigh_cost
+		pred_neigh_cost = real_neigh_cost + h(env, neigh)
 
-		if next_node in visited and real_next_cost >= visited[next_node]:
+		if neigh in visited and real_neigh_cost >= visited[neigh]:
 			continue
 
-		visited[next_node] = real_next_cost
+		visited[neigh] = real_neigh_cost
 
-		if pred_next_cost <= limit:
-			next_path = ida_traversal(next_node, env, visited, real_next_cost,
+		if pred_neigh_cost <= limit:
+			next_path = _ida_traversal(env, neigh, visited, real_neigh_cost,
 				limit, h)
 
 			if next_path:
-				return [crt_node] + next_path
-		elif pred_next_cost < global_limit:
-			global_limit = pred_next_cost
+				return [node] + next_path
+		elif pred_neigh_cost < global_limit:
+			global_limit = pred_neigh_cost
 
 	return []
 
@@ -45,7 +45,7 @@ def ida(env, h):
 		global_limit = inf
 		visited = {env.start: 0}
 
-		best_path = ida_traversal(env.start, env, visited, 0, limit, h)
+		best_path = _ida_traversal(env, env.start, visited, 0, limit, h)
 
 	return best_path, visited
 
