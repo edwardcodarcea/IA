@@ -61,3 +61,11 @@ curent.
 ### Laborator 4 - MCTS
 Se implementeaza algoritmul *Monte Carlo Tree Search* pe un joc de
 [connect 4](https://en.wikipedia.org/wiki/Connect_Four)
+
+### Laborator 5 - Unificare in logica cu predicate de ordinul I
+Se foloseste
+[algoritmul Robinson](https://en.wikipedia.org/wiki/Unification_(computer_science)#A_unification_algorithm)
+pentru a se realiza unificarea a doua formule, pe baza unui dictionar de
+substitutii (care se completeaza pe parcursul algoritmului).
+
+Bine ca de data asta putem sa alegem singuri cum reprezentam datele...
