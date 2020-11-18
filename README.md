@@ -3,6 +3,15 @@ Inteligenta Artificiala - UPB 2020-2021
 
 
 
+# Tema 1 - Cautari informate in spatiul starilor
+Se implementeaza si se compara performantele algoritmilor `DFID`, `IDA*`,
+`LRTA*` si [Branch and Bound](https://artint.info/html/ArtInt_63.html). Se
+afieseaza caile gasite de agent de la starea initiala pana la cea finala,
+costurile gasite de acesta pentru fiecare stare explorata, precum si timpii si
+memoria utilizata in cadrul fiecarui algoritm.
+
+
+
 ## Laboratoare
 ### Laborator 1 - A*
 Se foloseste _A*_ pentru a se gasi drumul de lungime minima intre 2 puncte

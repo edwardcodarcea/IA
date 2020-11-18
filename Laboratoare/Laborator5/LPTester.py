@@ -53,7 +53,7 @@ def ps(s, environment):
 def pTest(index, result, returned, check, test = None, printValue = False):
     out = "Test " + str(index) + ": "
     if result:
-        out += "OK" 
+        out += "OK"
         if printValue:
             out += ", got < " + str(returned) + " >"
     else:
@@ -103,14 +103,14 @@ def testL(Lv, Lc, env, idx, test = None, renderer = str):
     elif len(Lv) != len(Lc): Lc = "a list of length " + str(len(Lc))
     else: Lc = "a list also containing " + ", ".join([renderer(e) for e in Lc if e not in Lv])
     return pTest(idx, result, [renderer(e) for e in Lv], Lc, test)
-    
-# creates a testing function that calls Ftest on the result of applying Fval on the test 
+
+# creates a testing function that calls Ftest on the result of applying Fval on the test
 #  arguments and the KB. It is presumed that everything is already evaluated, including
 #  the test arguments.
 def testFKB(Ftest, Fval, KB, singleArgument = False):
     return lambda args, check, env, idx: \
         Ftest(Fval(*(([args] if singleArgument else list(args)) + [KB])), check, env, idx)
-    
+
 # tests if two formulas are the same, by evaluating them and testing for equality.
 def testForm(v, c, environment, idx):
     value = eval(v, environment)
@@ -151,7 +151,7 @@ def testResolves(f1, f2, sc, environment, idx):
     if sc != False and value and isinstance(value, tuple) and len(value) > 2:
         (l1, l2, sv) = value
         Pvalue = "(" + pf(l1, environment, False) + ", " + pf(l2, environment, False) + ", " + ps(sv, environment)
-        
+
         # check literals
         t, res = "Test " + str(idx) + ": ", ". \n\tResult was < " + str(Pvalue) + " > \n\tTest was < " + Ptest + " >"
         lEnv = {'L1': l1, 'L2': l2}
@@ -174,8 +174,8 @@ def testResolves(f1, f2, sc, environment, idx):
             print(t+"First part of the result is not a correct literal"+res)
             return False
         # maybe should check literals belong in sentences and atoms unify under substitution?
-        
-        
+
+
         # check substitution
         scA = {}
         for v in sc:
@@ -322,7 +322,7 @@ testBatch[0] = [(test, [
                 [("MinLenList", 2, args_2, "N/A. Get_args returns a list that is shorter than 2")]),
             ("get_name(get_args(make_atom('P', make_var('X')))[0])", 'X', \
                 [("MinLenList", 1, "get_args(make_atom('P', make_var('X')))")]),
-            ("is_constant("+args_1+"[0])", True, 
+            ("is_constant("+args_1+"[0])", True,
                 [("MinLenList", 1, args_1, "N/A. Get_args returns a list that is shorter than 1")]),
             # 25
             ("get_value("+args_1+"[0])", 2, [("MinLenList", 1, args_1, "N/A. Get_args returns a list shorter than 1")]),
@@ -332,7 +332,7 @@ testBatch[0] = [(test, [
             ("is_constant(get_args("+args_replaced2+"[0])[0])", True, \
                 [("MinLenList", 1, args_replaced2, "N/A. Replaced arguments not a list"),
                  ("MinLenList", 1, "get_args("+args_replaced2+"[0])", "N/A. Replaced arguments part not a list")]),
-            ("True", True, [("NotSameInstance", 
+            ("True", True, [("NotSameInstance",
                              "replace_args(F, [make_const(5)])", "F", "F", "make_atom('P', make_var('x'))",
                              "replace_args should return a different instance")]),
         ])]
@@ -372,14 +372,14 @@ testBatch[3] = [(testUnify, [
             ("make_atom('P', make_var('x'), make_const('A'))", "make_atom('P', make_const('A'), make_var('x'))", "None",
                           "{'x': make_const('A')}"),
             #4 # P(x, A, x) vs P(A, x, A) -> x: A
-            ("make_atom('P', make_var('x'), make_const('A'), make_var('x'))", 
+            ("make_atom('P', make_var('x'), make_const('A'), make_var('x'))",
                              "make_atom('P', make_const('A'), make_var('x'), make_const('A'))", "None",
                              "{'x': make_const('A')}"),
             #5 # P(x) vs P(add[Z, 5]) -> x: add[Z, 5]
             ("make_atom('P', make_var('x'))", "make_atom('P', make_function_call(add, make_var('Z'), make_const(5)))", "None",
                                 "{'x': make_function_call(add, make_var('Z'), make_const(5))}"),
             #6 # P(x, y, z) vs P(A, B, C) -> x: A, y: B, z: C
-            ("make_atom('P', make_var('x'), make_var('y'), make_var('z'))", 
+            ("make_atom('P', make_var('x'), make_var('y'), make_var('z'))",
                             "make_atom('P', make_const('A'), make_const('B'), make_const('C'))", "None",
                             "{'z': make_const('C'), 'y': make_const('B'), 'x': make_const('A')}"),
             #7 # Q(2, 3, add[x, y]) vs Q(x, y, add[2, 3]) -> x: 2, y: 3
@@ -387,7 +387,7 @@ testBatch[3] = [(testUnify, [
                             "make_atom('Q', make_var('x'), make_var('y'), make_function_call(add, make_const(2), make_const(3)))",
                             "None", "{'x': make_const(2), 'y': make_const(3)}"),
             #8 # P(x, y) vs P(x, add[y, 2]) -> False
-            ("make_atom('P', make_var('x'), make_var('y'))", 
+            ("make_atom('P', make_var('x'), make_var('y'))",
                          "make_atom('P', make_const('x'), make_function_call(add, make_var('y'), make_const(2)))", "None",
                          "False"),
             #9 # P(B) vs Q(B) -> False
@@ -398,18 +398,18 @@ testBatch[3] = [(testUnify, [
             ("make_atom('P', make_var('x'))", "make_atom('P', make_var('y'))", "None", "{'x': make_var('y')}"),
             #12 # P(y) vs P(x) -> {x: y} (or equivalent)
             ("make_atom('P', make_var('y'))", "make_atom('P', make_var('x'))", "None", "{'x': make_var('y')}"),
-           
+
             #13 # P(x) vs P(A) having x: A -> x: A
             ("make_atom('P', make_var('x'))", "make_atom('P', make_const('A'))", "{'x': make_const('A')}", "{'x': make_const('A')}"),
             #14 # P(x) vs P(A) having x: B -> False
             ("make_atom('P', make_var('x'))", "make_atom('P', make_const('A'))", "{'x': make_const('B')}", "False"),
-            
+
             #15 # P(x, x) vs P(A, A) having x: A -> x: A
-            ("make_atom('P', make_var('x'), make_var('x'))", "make_atom('P', make_const('A'), make_const('A'))", 
+            ("make_atom('P', make_var('x'), make_var('x'))", "make_atom('P', make_const('A'), make_const('A'))",
                          "{'x': make_const('A')}", "{'x': make_const('A')}"),
-            
+
             #16 # P(x, y, z) vs P(A, B, C) having x: A, z: C -> x: A, y: B, z: C
-            ("make_atom('P', make_var('x'), make_var('y'), make_var('z'))", 
+            ("make_atom('P', make_var('x'), make_var('y'), make_var('z'))",
                             "make_atom('P', make_const('A'), make_const('B'), make_const('C'))",
                             "{'x': make_const('A'), 'z': make_const('C')}",
                             "{'z': make_const('C'), 'y': make_const('B'), 'x': make_const('A')}"),
@@ -420,7 +420,7 @@ testBatch[3] = [(testUnify, [
             ("make_atom('P', make_var('x'))", "make_atom('P', make_var('y'))", "{'x': make_var('y')}", "{'x': make_var('y')}"),
             #19 # P(y) vs P(x) having y: x -> {y: x} (or equivalent)
             ("make_atom('P', make_var('y'))", "make_atom('P', make_var('x'))", "{'y': make_var('x')}", "{'x': make_var('y')}"),
-            
+
             #20  # P(x, y, z) vs P(y, z, 5) -> {x: 5, y: 5, z: 5}
             ("make_atom('P', make_var('x'), make_var('y'), make_var('z'))",
                 "make_atom('P', make_var('y'), make_var('z'), make_const(5))", "None",
@@ -430,10 +430,10 @@ testBatch[3] = [(testUnify, [
 #                 "make_atom('P', make_var('y'), make_var('z'), make_const(5))", "{'y': make_var('x')}",
 #                 "{'x': make_const(5), 'y': make_var('x'), 'z': make_const(5)}"),
             #21
-            (formula1, formula2, "None", 
+            (formula1, formula2, "None",
                 "{'x': make_const(3), 'y': make_const(4), 'z': make_function_call(add, make_const(1), make_const(2))}"),
             ])]
-  
+
 
 testBatch[4] = [(testResolves, [
             #0
@@ -461,11 +461,11 @@ testBatch[5] = [(testNewClause, [
             ("make_or(make_atom('P', make_var('x')), make_atom('Q', make_var('y')))", "make_neg(make_atom('P', make_const(5)))",
                 "make_atom('P', make_var('x'))", "make_neg(make_atom('P', make_const(5)))",
                 {'x': "make_const(5)"}, "make_atom('Q', make_var('y'))"),
-            ("make_atom('P', make_var('x'))", 
+            ("make_atom('P', make_var('x'))",
                 "make_or(make_neg(make_atom('Q', make_var('x'))), make_neg(make_atom('P', make_const(5))))",
                 "make_atom('P', make_var('x'))", "make_neg(make_atom('P', make_const(5)))",
                 {'x': "make_const(5)"}, "make_neg(make_atom('Q', make_const(5)))"),
-            ("make_or(make_atom('P', make_const(6)), make_atom('P', make_var('x')))", 
+            ("make_or(make_atom('P', make_const(6)), make_atom('P', make_var('x')))",
                 "make_or(make_neg(make_atom('Q', make_var('x'))), make_neg(make_atom('P', make_const(5))))",
                 "make_atom('P', make_var('x'))", "make_neg(make_atom('P', make_const(5)))",
                 {'x': "make_const(5)"}, "make_or(make_neg(make_atom('Q', make_const(5))), make_atom('P', make_const(6)))")
