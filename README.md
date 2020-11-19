@@ -3,15 +3,6 @@ Inteligenta Artificiala - UPB 2020-2021
 
 
 
-# Tema 1 - Cautari informate in spatiul starilor
-Se implementeaza si se compara performantele algoritmilor `DFID`, `IDA*`,
-`LRTA*` si [Branch and Bound](https://artint.info/html/ArtInt_63.html). Se
-afieseaza caile gasite de agent de la starea initiala pana la cea finala,
-costurile gasite de acesta pentru fiecare stare explorata, precum si timpii si
-memoria utilizata in cadrul fiecarui algoritm.
-
-
-
 ## Laboratoare
 ### Laborator 1 - A*
 Se foloseste _A*_ pentru a se gasi drumul de lungime minima intre 2 puncte
@@ -71,6 +62,7 @@ curent.
 Se implementeaza algoritmul *Monte Carlo Tree Search* pe un joc de
 [connect 4](https://en.wikipedia.org/wiki/Connect_Four)
 
+
 ### Laborator 5 - Unificare in logica cu predicate de ordinul I
 Se foloseste
 [algoritmul Robinson](https://en.wikipedia.org/wiki/Unification_(computer_science)#A_unification_algorithm)
@@ -78,3 +70,17 @@ pentru a se realiza unificarea a doua formule, pe baza unui dictionar de
 substitutii (care se completeaza pe parcursul algoritmului).
 
 Bine ca de data asta putem sa alegem singuri cum reprezentam datele...
+
+
+### Laborator 6 - Rezolutie in logica cu predicate de ordinul I
+Se utilizeaza rezolutia pentru a demonstra propozitii
+
+
+
+## Teme
+### Tema 1 - Cautari informate in spatiul starilor
+Se implementeaza si se compara performantele algoritmilor `DFID`, `IDA*`,
+`LRTA*` si [Branch and Bound](https://artint.info/html/ArtInt_63.html). Se
+afieseaza caile gasite de agent de la starea initiala pana la cea finala,
+costurile gasite de acesta pentru fiecare stare explorata, precum si timpii si
+memoria utilizata in cadrul fiecarui algoritm.
